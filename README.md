@@ -219,21 +219,6 @@ sudo docker exec clab-ebpf-lab-node-a ping -c 3 10.0.0.2
 
 ---
 
-## 🔬 Bônus — Experimento de Performance: XDP vs iptables
-
-Uma das grandes vantagens do XDP é processar pacotes **antes** da pilha de rede do kernel. Este experimento permite comparar o desempenho de descarte contra a abordagem tradicional com `iptables`.
-
-**Inundar o node-b com pacotes UDP a partir do node-a:**
-
-```bash
-# Inunda o node-b com pacotes UDP (mais rápido que ICMP)
-sudo docker exec clab-ebpf-lab-node-a hping3 --flood --udp -p 80 10.0.0.2
-```
-
-Monitore o uso de CPU e a taxa de descarte de pacotes com e sem XDP para observar a diferença de overhead.
-
----
-
 ## 🧹 Limpeza
 
 Para destruir o laboratório e remover todos os containers:
