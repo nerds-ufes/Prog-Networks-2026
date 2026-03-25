@@ -112,7 +112,7 @@ Success! xdp_drop.o created.🍻🍻🍻
 
 ---
 
-## 🌐 Passo 2 — Deploy da Topologia
+## 🐝 Passo 2 — Deploy da Topologia
 
 ```bash
 sudo containerlab deploy -t lab-ebpf.clab.yml --reconfigure
@@ -132,7 +132,7 @@ docker ps --filter "label=containerlab=ebpf-lab"
 
 ---
 
-## ✅ Passo 3 — Verificar Conectividade Inicial
+## 🐝 Passo 3 — Verificar Conectividade Inicial
 
 Antes de ativar o filtro XDP, confirme que os nós se comunicam normalmente:
 
@@ -171,7 +171,7 @@ sudo docker exec clab-ebpf-lab-node-b \
 
 ---
 
-## 🧪 Passo 5 — Teste e Verificação
+## 🐝 Passo 5 — Teste e Verificação
 
 ### 5.1 Confirmar que o ICMP está bloqueado
 
