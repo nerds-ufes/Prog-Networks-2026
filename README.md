@@ -1,4 +1,4 @@
-# 🛡️ Laboratório XDP/eBPF com Containerlab
+# 🐝 Laboratório XDP/eBPF com Containerlab
 
 > Laboratório prático de **filtragem de pacotes em velocidade de linha** usando **eBPF/XDP** em um ambiente de rede virtualizado com **Containerlab**.
 
