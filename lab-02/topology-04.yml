@@ -1,0 +1,97 @@
+name: lab-04
+
+topology:
+  nodes:
+
+    PC1:
+      kind: linux
+      image: ebpf-host:latest
+#      capabilities:
+#        - NET_ADMIN
+#        - SYS_ADMIN
+#        - SYS_RESOURCE
+      binds:
+        - /sys/fs/bpf:/sys/fs/bpf
+        - /lib/modules:/lib/modules
+        - /usr/sbin/bpftool:/usr/sbin/bpftool
+        - /boot:/boot
+      exec:
+        - ip link set dev eth1 address 00:00:00:00:01:01
+        - ip addr add 10.0.0.1/24 dev eth1
+        - ip link set eth1 up
+      
+
+    PC2:
+      kind: linux
+      image: ebpf-host:latest
+#      capabilities:
+#        - NET_ADMIN
+#        - SYS_ADMIN
+#        - SYS_RESOURCE
+      binds:
+        - /sys/fs/bpf:/sys/fs/bpf
+        - /lib/modules:/lib/modules
+        - /usr/sbin/bpftool:/usr/sbin/bpftool
+
+      exec:
+        - ip link set dev eth1 address 00:00:00:00:02:02
+        - ip addr add 10.0.0.2/24 dev eth1
+        - ip link set eth1 up
+
+
+    PC3:
+      kind: linux
+      image: ebpf-host:latest
+#      capabilities:
+#        - NET_ADMIN
+#        - SYS_ADMIN
+#        - SYS_RESOURCE
+      binds:
+        - /sys/fs/bpf:/sys/fs/bpf
+        - /lib/modules:/lib/modules
+        - /usr/sbin/bpftool:/usr/sbin/bpftool
+
+      exec:
+        - ip link set dev eth1 address 00:00:00:00:03:03
+        - ip addr add 10.0.0.3/24 dev eth1
+        - ip link set eth1 up
+
+
+    # SW1 agora é uma bridge (switch Linux nativo)
+    SW1:
+      kind: linux
+      image: ebpf-host:latest
+      exec:
+        - ip link add br0 type bridge
+        - ip link set br0 up
+        - ip link set eth1 master br0
+        - ip link set eth2 master br0
+        - ip link set eth3 master br0
+        - ip link set eth1 up
+        - ip link set eth2 up
+        - ip link set eth3 up
+        - tc qdisc add dev eth2 root netem delay 50ms loss 1%
+        - tc qdisc add dev eth2 parent 1:1 tbf rate 10mbit burst 32kbit latency 400ms
+#        - tc qdisc add dev eth2 parent 1:1 handle 10: tbf rate 10mbit burst 32kbit latency 400ms
+        
+    
+    # Configurar como bridge manualmente ou deixar como roteador
+
+    # SW2 agora é uma bridge
+    SW2:
+      kind: linux
+      image: ebpf-host:latest
+      exec:
+        - ip link add br0 type bridge
+        - ip link set br0 up
+        - ip link set eth1 master br0
+        - ip link set eth2 master br0
+        - ip link set eth1 up
+        - ip link set eth2 up
+
+  links:
+#    - endpoints: ["PC1:eth1", "PC2:eth1"]
+    - endpoints: ["PC1:eth1", "SW1:eth1"]
+    - endpoints: ["PC3:eth1", "SW1:eth3"]
+    - endpoints: ["SW1:eth2", "SW2:eth1"]
+    - endpoints: ["SW2:eth2", "PC2:eth1"]
