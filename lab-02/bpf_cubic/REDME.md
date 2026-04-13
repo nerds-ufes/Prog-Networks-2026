@@ -381,7 +381,7 @@ sudo bpftool map update id 123 \
 | `bic_scale` = 41 (default) | `41` | `29 00 00 00` |
 | `bic_scale` = 50 (agressivo) | `50` | `32 00 00 00` |
 | `bic_scale` = 30 (conservador) | `30` | `1e 00 00 00` |
-| `mult_rtt` = 5 (default) | `5` | `05 00 00 00` |
+| `mult_rtt` = 2 (default) | `2` | `02 00 00 00` |
 | `mult_rtt` = 8 (conservador) | `8` | `08 00 00 00` |
 
 ### Restaurar defaults
