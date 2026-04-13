@@ -1,4 +1,4 @@
-# lab-04 — Topologia Containerlab para Testes de TCP com eBPF
+# lab-02 — Topologia Containerlab para Testes de TCP com eBPF
 
 Laboratório containerlab para análise de comportamento do TCP sob condições de rede degradadas. A topologia simula um ambiente com delay, perda de pacotes e limitação de banda no link de backbone, ideal para validar implementações de controle de congestionamento via eBPF (ex: `bpf_cubic`).
 
