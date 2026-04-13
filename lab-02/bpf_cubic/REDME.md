@@ -202,7 +202,7 @@ struct {
 |-------------|---------|--------|--------|------------------------------------------------|
 | `beta`      | `717`   | —      | `1023` | Fração de redução do cwnd após perda (`717/1024 ≈ 0.7`) |
 | `bic_scale` | `41`    | `10`   | `60`   | Agressividade do crescimento cúbico            |
-| `mult_rtt`  | `5`     | —      | —      | Limiar de RTT elevado para reset duplo         |
+| `mult_rtt`  | `2`     | —      | —      | Limiar de RTT elevado para reset duplo         |
 
 > ℹ️ Se o mapa não for encontrado ou um campo for `0`, o código usa automaticamente os valores `#define` padrão — o mapa nunca é obrigatório para operação.
 
