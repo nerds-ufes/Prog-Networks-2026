@@ -1,4 +1,4 @@
-# start.sh — Orquestrador do lab-04
+# start.sh — Orquestrador do lab-02
 
 Script de inicialização completa do laboratório `lab-04`. Automatiza desde a destruição de instâncias anteriores até o disparo de fluxos TCP simultâneos entre os hosts, com suporte opcional a sessões `tmux` para acesso interativo aos containers.
 
