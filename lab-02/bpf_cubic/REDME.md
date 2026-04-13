@@ -219,7 +219,7 @@ Retorna o valor de `beta` do mapa ou `717` se ausente/zero.
 Retorna o valor de `bic_scale` do mapa, **forçando o valor para o intervalo `[10, 60]`** independentemente do que for escrito no mapa.
 
 #### `cubic_mult_rtt()`
-Retorna o multiplicador de RTT do mapa ou `5` se ausente/zero.
+Retorna o multiplicador de RTT do mapa ou `2` se ausente/zero.
 
 #### `cubic_beta_scale(beta)`
 Função derivada — calcula o fator de escala usado na lógica de TCP friendliness:
