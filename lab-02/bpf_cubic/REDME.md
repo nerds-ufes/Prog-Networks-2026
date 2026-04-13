@@ -3,7 +3,7 @@
 
 Implementação do algoritmo de controle de congestionamento TCP **CUBIC** como um programa eBPF usando a interface `struct_ops`. Permite carregar, registrar e configurar dinamicamente o CUBIC no kernel Linux sem recompilar ou substituir módulos — e ajustar seus parâmetros em tempo real via mapa eBPF.
 
-> ⚠️ Esta implementação é derivada do `tcp_cubic.c` do kernel, mas **não é idêntica** a ele. O propósito principal é testar a infraestrutura de eBPF `struct_ops` para controle de congestionamento TCP. Consulte as [diferenças em relação ao kernel](#diferenças-em-relação-ao-tcp_cubicc-do-kernel) para detalhes.
+> ⚠️ Esta implementação é derivada do `tcp_cubic.c` do kernel, mas **não é idêntica** a ele. O propósito principal é testar a infraestrutura de eBPF `struct_ops` para controle de congestionamento TCP. Consulte as [Flex-Cubic: A Runtime-Adaptive Loss-Tolerant TCP Cubic](https://github.com/nerds-ufes/Flex-Cubic) para detalhes.
 
 ---
 
