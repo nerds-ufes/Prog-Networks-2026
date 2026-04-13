@@ -419,7 +419,7 @@ if (is_loss_state && is_rtt_x) {
 
 **Efeito prático:** perdas em condições de RTT estável (ex: perda aleatória em redes sem congestionamento real) **não disparam reset completo** do algoritmo. Apenas perdas acompanhadas de aumento significativo de RTT — indicativo de congestionamento genuíno — causam reset.
 
-O valor de `mult_rtt` (default `5`) é controlável via mapa eBPF em tempo real.
+O valor de `mult_rtt` (default `2`) é controlável via mapa eBPF em tempo real.
 
 ---
 
