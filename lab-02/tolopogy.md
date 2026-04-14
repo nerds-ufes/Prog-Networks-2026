@@ -290,7 +290,15 @@ docker exec -it clab-lab-04-PC2 iperf3 -s
 # No PC1 (cliente)
 docker exec -it clab-lab-04-PC1 iperf3 -c 10.0.0.2 -t 30
 ```
+### ou no termux
+```bash
+# No PC1 (cliente 1)
+iperf3 -c 10.0.0.2 -C bpf_cubic -t 50 -- port 5201 --json >> iperf3_PC1.txt
 
+# No PC3 (cliente 2)
+iperf3 -c 10.0.0.2 -C bpf_cubic -t 50 -- port 5202 --json >> iperf3_PC3.txt
+```
+> O PC2 já possui duas sessões em execução nas portas 5201 e 5202.
 > O throughput deve ser limitado a ~10 Mbit/s pelo `tbf` em SW1.
 
 ### Inspeção de conexões TCP
