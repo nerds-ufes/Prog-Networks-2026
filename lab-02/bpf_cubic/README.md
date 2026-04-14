@@ -132,7 +132,6 @@ sudo bpftool struct_ops unregister name cubic
 char _license[] SEC("license") = "GPL";
 ```
 
-> ℹ️ `bpf_helpers.h` e `bpf_core_read.h` aparecem duplicados no arquivo — isso não causa erro de compilação mas pode ser limpo.
 
 ---
 
