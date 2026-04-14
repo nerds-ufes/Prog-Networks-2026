@@ -97,19 +97,26 @@ echo ""
 
 echo ""
 echo "=== Iniciando servidor iperf3 (PC2) ==="
-sudo docker exec -d clab-${LAB}-PC2 iperf3 -s
+sudo docker exec -d clab-${LAB}-PC2 iperf3 -s --port 5201
+sudo docker exec -d clab-${LAB}-PC2 iperf3 -s --port 5202
 
 # Pequeno delay para garantir que o servidor subiu
 sleep 2
+
+KERNEL=$(uname -r)
+sudo docker exec clab-${LAB}-PC1 apt update
+sudo docker exec clab-${LAB}-PC1 apt install -y linux-tools-$KERNEL linux-cloud-tools-$KERNEL
+#sudo docker exec clab-${LAB}-PC3 apt update
+#sudo docker exec clab-${LAB}-PC3 apt install -y linux-tools-$KERNEL linux-cloud-tools-$KERNEL
 
 echo ""
 echo "=== Iniciando fluxos TCP simultâneos ==="
 
 # Cliente PC1
-sudo docker exec -d clab-${LAB}-PC1 bash -c "sleep 2; iperf3 -c 10.0.0.2 -t 100 --json >> iperf_pc1.txt"
+# sudo docker exec -d clab-${LAB}-PC1 bash -c "sleep 2; iperf3 -c 10.0.0.2 -t 100 --json >> iperf_pc1.txt"
 
 # Cliente PC3
-sudo docker exec -d clab-${LAB}-PC3 bash -c "sleep 2; iperf3 -c 10.0.0.2 -t 100 --json >> iperf_pc3.txt"
+# sudo docker exec -d clab-${LAB}-PC3 bash -c "sleep 2; iperf3 -c 10.0.0.2 -t 100 --json >> iperf_pc3.txt"
 
 
 
