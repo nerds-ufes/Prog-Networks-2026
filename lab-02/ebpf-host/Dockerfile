@@ -1,34 +1,31 @@
 FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Atualiza sistema
-RUN apt-get update && apt-get upgrade -y
-
-# Pacotes base + dependências para adicionar repositório LLVM
-RUN apt-get install -y \
+# Atualiza sistema e instala dependências base para adicionar repositório LLVM
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     wget \
     gnupg \
     lsb-release \
     software-properties-common \
-    ca-certificates
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
 # Adiciona repositório oficial do LLVM e instala clang-18
-# Sem 'sudo' (container já roda como root) e com apt-get -y (não interativo)
 RUN wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key \
         | tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc && \
     echo "deb http://apt.llvm.org/$(lsb_release -cs)/ llvm-toolchain-$(lsb_release -cs)-18 main" \
         | tee /etc/apt/sources.list.d/llvm-18.list && \
     apt-get update && \
-    apt-get install -y clang-18 llvm-18
+    apt-get install -y clang-18 llvm-18 \
+    && rm -rf /var/lib/apt/lists/*
 
 # Cria aliases para que 'clang' e 'llvm-*' apontem para a versão 18
-# Necessário para Makefiles que chamam 'clang' sem sufixo de versão
 RUN update-alternatives --install /usr/bin/clang      clang      /usr/bin/clang-18      100 && \
     update-alternatives --install /usr/bin/clang++    clang++    /usr/bin/clang++-18    100 && \
     update-alternatives --install /usr/bin/llvm-strip llvm-strip /usr/bin/llvm-strip-18 100
 
 # Pacotes necessários para eBPF + desenvolvimento
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
     build-essential \
     nano \
     libssl-dev \
@@ -58,10 +55,12 @@ RUN apt-get install -y \
     pahole \
     trace-cmd \
     iputils-ping \
-    iperf3
-
-RUN apt update && \
-    apt install -y linux-headers-6.8.0-106-generic
+    iperf3 \
+    linux-headers-6.8.0-106-generic \
+    bpfcc-tools \
+    python3-bpfcc \
+    libbpfcc-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Instala bibliotecas Python para eBPF
 RUN pip3 install --no-cache-dir \
@@ -69,17 +68,9 @@ RUN pip3 install --no-cache-dir \
     scapy \
     numpy \
     matplotlib \
-    pandas \
-    bcc
+    pandas
 
-RUN pip3 install pytest
-
-RUN pip uninstall -y bcc || true
-
-RUN apt update && apt install -y \
-    bpfcc-tools \
-    python3-bpfcc \
-    libbpfcc-dev
+RUN pip3 install --no-cache-dir pytest
 
 # Compila bpftool direto do kernel source
 # (garante compatibilidade independente do kernel do host)
